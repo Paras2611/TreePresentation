@@ -1,20 +1,9 @@
 
-export interface TreeNodeData {
-  id: string;
-  value: string;
-  left?: TreeNodeData;
-  right?: TreeNodeData;
-}
-
+// Fix: Define the TraversalType enum to resolve the 'is not a module' error in TreeVisualizer.tsx
+// This ensures that the file has at least one export, making it a valid TypeScript module.
 export enum TraversalType {
-  PREORDER = 'Preorder',
-  INORDER = 'Inorder',
-  POSTORDER = 'Postorder',
-  LEVELORDER = 'Level Order'
-}
-
-export interface TreeType {
-  title: string;
-  description: string;
-  visual: React.ReactNode;
+  PREORDER = 'preorder',
+  INORDER = 'inorder',
+  POSTORDER = 'postorder',
+  LEVELORDER = 'levelorder',
 }

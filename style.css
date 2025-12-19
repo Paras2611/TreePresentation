@@ -1,0 +1,87 @@
+/* Custom UI Enhancements */
+:root {
+    --emerald: #10b981;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+.t-btn {
+    width: 100%;
+    text-align: left;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.75rem;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.t-btn:hover {
+    background: rgba(255,255,255,0.08);
+}
+
+.t-btn.active {
+    background: var(--emerald);
+    color: white;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+    transform: translateX(4px);
+}
+
+/* Node Styling */
+.node-circle {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.node-highlighted {
+    fill: var(--emerald) !important;
+    filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.6));
+    transform: scale(1.1);
+    transform-origin: center;
+}
+
+.text-active {
+    fill: white !important;
+    font-weight: bold !important;
+}
+
+/* Sequence Indicator */
+.seq-dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.seq-dot.active {
+    background: var(--emerald);
+    color: white;
+    border-color: var(--emerald);
+    transform: translateY(-2px);
+}
+
+pre code {
+    font-family: 'Fira Code', monospace;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
