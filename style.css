@@ -9,10 +9,35 @@ html {
     scroll-behavior: smooth;
 }
 
+/* Traversal Buttons */
+.t-btn {
+    width: 100%;
+    text-align: left;
+    padding: 1rem;
+    border-radius: 1rem;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.05);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.t-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.t-btn.active {
+    background-color: #10b981;
+    border-color: #34d399;
+    box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.2);
+    transform: translateX(0.5rem);
+}
+
 /* Code block adjustments */
 pre code {
     white-space: pre-wrap;
     word-break: break-all;
+    font-family: 'Fira Code', monospace;
 }
 
 /* Custom UI Transitions */
@@ -20,25 +45,9 @@ pre code {
     transition: all 0.3s ease;
 }
 
-/* Traversal Button Active State Animation */
-.t-btn-active {
-    box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.2);
-}
-
-/* SVG Node Animation */
-@keyframes pulse-emerald {
-    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
-    70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
-    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-}
-
 /* Card Hover Effects */
-.card-hover {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.card-hover:hover {
+.group:hover {
     transform: translateY(-5px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
 }
 
 /* Scrollbar Styling */
