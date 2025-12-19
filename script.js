@@ -1,9 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Academic Constants
-    const PRESENTER_NAME = "Pras Jagdish Patil";
-    const ROLL_NO = "2547028";
-
-    // Tree Types Data
+    // -------------------------------------------------------------------------
+    // 1. Data Definitions
+    // -------------------------------------------------------------------------
     const TREE_TYPES = [
         { name: "Binary Tree", desc: "Each node has at most 2 children.", icon: "fa-diagram-project" },
         { name: "Full Binary Tree", desc: "Every node has 0 or 2 children.", icon: "fa-circle-dot" },
@@ -17,7 +15,6 @@ document.addEventListener("DOMContentLoaded", function () {
         { name: "B-Tree", desc: "Balanced search tree optimized for large blocks of data.", icon: "fa-database" }
     ];
 
-    // Traversal Data
     const TRAVERSAL_INFO = {
         inorder: {
             title: "Inorder Traversal",
@@ -49,7 +46,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
-    // Tree Structure
     const TREE_NODES = [
         { id: '1', x: 200, y: 40,  val: '1', left: '2', right: '3' },
         { id: '2', x: 100, y: 110, val: '2', left: '4', right: '5' },
@@ -64,7 +60,9 @@ document.addEventListener("DOMContentLoaded", function () {
     let isPlaying = false;
     let animationTimeout = null;
 
-    // --- DOM Selection ---
+    // -------------------------------------------------------------------------
+    // 2. DOM Selection with Null Checks
+    // -------------------------------------------------------------------------
     const introSvg = document.getElementById('intro-static-svg');
     const typesContainer = document.getElementById('tree-types-container');
     const menuButtons = document.querySelectorAll('.t-btn');
@@ -75,53 +73,43 @@ document.addEventListener("DOMContentLoaded", function () {
     const descText = document.getElementById('traversal-desc-text');
     const filenameDisplay = document.getElementById('filename-display');
     const codeDisplay = document.getElementById('python-code-display');
+    
+    // AI Elements
+    const aiInsightBtn = document.getElementById('ai-insight-btn');
+    const currentTypeLabel = document.getElementById('current-type-label');
+    const aiResponseArea = document.getElementById('ai-response-area');
+    const aiResponseText = document.getElementById('ai-response-text');
 
-    // --- Initialization ---
-    function init() {
-        renderIntroSvg();
-        renderTypes();
-        setupTraversalMenu();
-        updateUI();
-        playbackBtn.addEventListener('click', togglePlayback);
-    }
-
+    // -------------------------------------------------------------------------
+    // 3. Helper Functions
+    // -------------------------------------------------------------------------
     function renderIntroSvg() {
-        if (!introSvg) return;
-        introSvg.innerHTML = `
-            <line x1="120" y1="30" x2="60" y2="90" stroke="#10b981" stroke-width="3" />
-            <line x1="120" y1="30" x2="180" y2="90" stroke="#10b981" stroke-width="3" />
-            <circle cx="120" cy="30" r="22" fill="#10b981" />
-            <text x="120" y="36" text-anchor="middle" fill="white" font-weight="bold" font-size="12">ROOT</text>
-            <circle cx="60" cy="90" r="18" fill="white" stroke="#10b981" stroke-width="2" />
-            <circle cx="180" cy="90" r="18" fill="white" stroke="#10b981" stroke-width="2" />
-            <line x1="60" y1="90" x2="30" y2="150" stroke="#10b981" stroke-width="2" />
-            <circle cx="30" cy="150" r="15" fill="white" stroke="#10b981" stroke-width="2" />
-        `;
+        if (introSvg) {
+            introSvg.innerHTML = `
+                <line x1="120" y1="30" x2="60" y2="90" stroke="#10b981" stroke-width="3" />
+                <line x1="120" y1="30" x2="180" y2="90" stroke="#10b981" stroke-width="3" />
+                <circle cx="120" cy="30" r="22" fill="#10b981" />
+                <text x="120" y="36" text-anchor="middle" fill="white" font-weight="bold" font-size="12">ROOT</text>
+                <circle cx="60" cy="90" r="18" fill="white" stroke="#10b981" stroke-width="2" />
+                <circle cx="180" cy="90" r="18" fill="white" stroke="#10b981" stroke-width="2" />
+                <line x1="60" y1="90" x2="30" y2="150" stroke="#10b981" stroke-width="2" />
+                <circle cx="30" cy="150" r="15" fill="white" stroke="#10b981" stroke-width="2" />
+            `;
+        }
     }
 
     function renderTypes() {
-        if (!typesContainer) return;
-        typesContainer.innerHTML = TREE_TYPES.map(type => `
-            <div class="group bg-white p-8 rounded-3xl border border-slate-200 hover:border-emerald-300 hover:shadow-xl transition-all duration-300">
-                <div class="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-emerald-500 group-hover:text-white transition-colors">
-                    <i class="fa-solid ${type.icon} text-emerald-600 group-hover:text-white text-xl"></i>
+        if (typesContainer) {
+            typesContainer.innerHTML = TREE_TYPES.map(type => `
+                <div class="group bg-white p-8 rounded-3xl border border-slate-200 hover:border-emerald-300 hover:shadow-xl transition-all duration-300">
+                    <div class="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-emerald-500 group-hover:text-white transition-colors">
+                        <i class="fa-solid ${type.icon} text-emerald-600 group-hover:text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">${type.name}</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">${type.desc}</p>
                 </div>
-                <h3 class="text-xl font-bold text-slate-800 mb-3">${type.name}</h3>
-                <p class="text-slate-500 text-sm leading-relaxed">${type.desc}</p>
-            </div>
-        `).join('');
-    }
-
-    function setupTraversalMenu() {
-        menuButtons.forEach(btn => {
-            btn.addEventListener('click', function() {
-                if (isPlaying) stopAnimation();
-                menuButtons.forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                currentType = this.dataset.type;
-                updateUI();
-            });
-        });
+            `).join('');
+        }
     }
 
     function updateUI() {
@@ -130,6 +118,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (descText) descText.textContent = info.desc;
         if (filenameDisplay) filenameDisplay.textContent = `${currentType}.py`;
         if (codeDisplay) codeDisplay.textContent = info.code;
+        if (currentTypeLabel) currentTypeLabel.textContent = info.title;
         
         drawTree();
         renderSequenceDots();
@@ -139,7 +128,6 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!visualizerSvg) return;
         
         let html = '';
-        // Edges
         TREE_NODES.forEach(node => {
             if (node.left) {
                 const child = TREE_NODES.find(n => n.id === node.left);
@@ -151,7 +139,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        // Nodes
         TREE_NODES.forEach(node => {
             const isActive = activeId === node.id;
             const isVisited = visitedIds.includes(node.id);
@@ -160,14 +147,11 @@ document.addEventListener("DOMContentLoaded", function () {
             
             html += `
                 <g>
-                    <circle cx="${node.x}" cy="${node.y}" r="20" 
-                        fill="${fillColor}" stroke="${strokeColor}" stroke-width="2" 
-                        class="transition-all duration-300" />
+                    <circle cx="${node.x}" cy="${node.y}" r="20" fill="${fillColor}" stroke="${strokeColor}" stroke-width="2" />
                     <text x="${node.x}" y="${node.y + 6}" text-anchor="middle" fill="white" font-size="14" font-weight="bold">${node.val}</text>
                 </g>
             `;
         });
-        
         visualizerSvg.innerHTML = html;
     }
 
@@ -183,17 +167,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }).join('');
     }
 
-    function togglePlayback() {
-        if (isPlaying) {
-            stopAnimation();
-        } else {
-            startAnimation();
-        }
-    }
-
     function startAnimation() {
         isPlaying = true;
-        playbackBtn.innerHTML = '<i class="fa-solid fa-rotate-right text-xl"></i>';
+        if (playbackBtn) playbackBtn.innerHTML = '<i class="fa-solid fa-rotate-right text-xl"></i>';
         
         const sequence = TRAVERSAL_INFO[currentType].sequence;
         let i = 0;
@@ -208,7 +184,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 i++;
                 animationTimeout = setTimeout(step, 800);
             } else {
-                stopAnimation();
+                isPlaying = false;
+                if (playbackBtn) playbackBtn.innerHTML = '<i class="fa-solid fa-play text-xl"></i>';
             }
         }
         step();
@@ -217,10 +194,78 @@ document.addEventListener("DOMContentLoaded", function () {
     function stopAnimation() {
         isPlaying = false;
         clearTimeout(animationTimeout);
-        playbackBtn.innerHTML = '<i class="fa-solid fa-play text-xl"></i>';
+        if (playbackBtn) playbackBtn.innerHTML = '<i class="fa-solid fa-play text-xl"></i>';
         drawTree();
         renderSequenceDots();
     }
 
-    init();
+    // -------------------------------------------------------------------------
+    // 4. AI Integration Logic
+    // -------------------------------------------------------------------------
+    async function getAIInsight() {
+        if (!aiInsightBtn || !aiResponseArea || !aiResponseText) return;
+        
+        const originalContent = aiInsightBtn.innerHTML;
+        aiInsightBtn.disabled = true;
+        aiInsightBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Analyzing...';
+        aiResponseArea.classList.remove('hidden');
+        aiResponseText.textContent = "Consulting the Gemini AI academic model for deep tree insights...";
+
+        try {
+            // Using the native GoogleGenAI SDK as per instructions
+            // Since we're in a browser, we import from the esm.sh version typically
+            // but for this specific instruction set, we assume the environment provides process.env.API_KEY
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${process.env.API_KEY}`;
+            const prompt = `Provide a concise academic fun fact or optimization tip about ${TRAVERSAL_INFO[currentType].title} in data structures. Keep it under 100 words. Mention real-world usage like file systems or compiler design.`;
+
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: prompt }] }]
+                })
+            });
+
+            const data = await response.json();
+            const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "Unable to retrieve AI insight at this time.";
+            aiResponseText.textContent = text;
+        } catch (error) {
+            console.error("Gemini API Error:", error);
+            aiResponseText.textContent = "Academic server communication error. Please try again later.";
+        } finally {
+            aiInsightBtn.disabled = false;
+            aiInsightBtn.innerHTML = originalContent;
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // 5. Setup Events
+    // -------------------------------------------------------------------------
+    if (menuButtons) {
+        menuButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (isPlaying) stopAnimation();
+                menuButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentType = this.dataset.type;
+                if (aiResponseArea) aiResponseArea.classList.add('hidden');
+                updateUI();
+            });
+        });
+    }
+
+    if (playbackBtn) {
+        playbackBtn.addEventListener('click', () => {
+            if (isPlaying) stopAnimation(); else startAnimation();
+        });
+    }
+
+    if (aiInsightBtn) {
+        aiInsightBtn.addEventListener('click', getAIInsight);
+    }
+
+    // Initialize the page
+    renderIntroSvg();
+    renderTypes();
+    updateUI();
 });

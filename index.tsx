@@ -1,1 +1,1 @@
-// Logic moved to script.js for static deployment.
+// This project is strictly static. All logic resides in script.js.
